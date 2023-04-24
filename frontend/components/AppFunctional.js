@@ -62,38 +62,44 @@ export default function AppFunctional(props) {
   }
 
   function reset() {
-    // Tüm stateleri başlangıç ​​değerlerine sıfırlamak için bu helperı kullanın.
+    setState(initalState);
   }
-  useEffect(
-    function sonrakiIndex(yon) {
-      // Bu helper bir yön ("sol", "yukarı", vb.) alır ve "B" nin bir sonraki indeksinin ne olduğunu hesaplar.
-      // Gridin kenarına ulaşıldığında başka gidecek yer olmadığı için,
-      // şu anki indeksi değiştirmemeli.
-      if (yon === "left") {
-        setState({ ...state, initialIndex: state.initialIndex - 1 });
-      }
-      console.log(state);
-      console.log(yon);
-    },
-    [state.initialIndex]
-  );
+
   function sonrakiIndex(yon) {
     // Bu helper bir yön ("sol", "yukarı", vb.) alır ve "B" nin bir sonraki indeksinin ne olduğunu hesaplar.
     // Gridin kenarına ulaşıldığında başka gidecek yer olmadığı için,
     // şu anki indeksi değiştirmemeli.
+
     if (yon === "left") {
-      setState({ ...state, initialIndex: state.initialIndex - 1 });
+      setState({
+        ...state,
+        initialIndex: state.initialIndex - 1,
+        initialSteps: state.initialSteps + 1,
+      });
     } else if (yon === "right") {
-      setState({ ...state, initialIndex: state.initialIndex + 1 });
+      setState({
+        ...state,
+        initialIndex: state.initialIndex + 1,
+        initialSteps: state.initialSteps + 1,
+      });
     } else if (yon === "up") {
-      setState({ ...state, initialIndex: state.initialIndex - 3 });
+      setState({
+        ...state,
+        initialIndex: state.initialIndex - 3,
+        initialSteps: state.initialSteps + 1,
+      });
     } else if (yon === "down") {
-      setState({ ...state, initialIndex: state.initialIndex + 3 });
+      setState({
+        ...state,
+        initialIndex: state.initialIndex + 3,
+        initialSteps: state.initialSteps + 1,
+      });
     }
 
-    console.log(state);
     console.log(yon);
   }
+
+  console.log(state);
 
   function ilerle(evt) {
     // Bu event handler, "B" için yeni bir dizin elde etmek üzere yukarıdaki yardımcıyı kullanabilir,
@@ -111,8 +117,8 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Koordinatlar (2, 2)</h3>
-        <h3 id="steps">0 kere ilerlediniz</h3>
+        <h3 id="coordinates">Koordinatlar {cord}</h3>
+        <h3 id="steps">{state.initialSteps} kere ilerlediniz</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
@@ -140,7 +146,7 @@ export default function AppFunctional(props) {
         <button id="down" onClick={() => sonrakiIndex("down")}>
           AŞAĞI
         </button>
-        <button id="reset" onClick={() => sonrakiIndex("reset")}>
+        <button id="reset" onClick={() => reset()}>
           reset
         </button>
       </div>
