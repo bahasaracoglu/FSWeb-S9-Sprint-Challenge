@@ -100,11 +100,11 @@ export default function AppFunctional(props) {
   }
 
   console.log(state);
-
+  /*
   function ilerle(evt) {
     // Bu event handler, "B" için yeni bir dizin elde etmek üzere yukarıdaki yardımcıyı kullanabilir,
     // ve buna göre state i değiştirir.
-  }
+  }*/
 
   function onChange(evt) {
     // inputun değerini güncellemek için bunu kullanabilirsiniz
@@ -151,7 +151,15 @@ export default function AppFunctional(props) {
         </button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="email girin"></input>
+        <input
+          id="email"
+          type="email"
+          placeholder="email girin"
+          value={state.initialEmail}
+          onChange={(event) =>
+            setState({ ...state, initialEmail: event.target.value })
+          }
+        ></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
