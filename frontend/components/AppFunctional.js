@@ -1,19 +1,15 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-// önerilen başlangıç stateleri
 const initalState = {
   message: "",
   email: "",
   steps: 0,
-  index: 4, //  "B" nin bulunduğu indexi
+  index: 4,
 };
 
 export default function AppFunctional(props) {
   const [state, setState] = useState(initalState);
-
-  // AŞAĞIDAKİ HELPERLAR SADECE ÖNERİDİR.
-  // Bunları silip kendi mantığınızla sıfırdan geliştirebilirsiniz.
 
   let XY = {};
   switch (state.index) {
@@ -49,68 +45,55 @@ export default function AppFunctional(props) {
   }
 
   console.log(XY);
-  /*
-  function getXY(index) {
-    // Koordinatları izlemek için bir state e sahip olmak gerekli değildir.
-    // Bunları hesaplayabilmek için "B" nin hangi indexte olduğunu bilmek yeterlidir.
-  }*/
-
-  function getXYMesaj() {
-    // Kullanıcı için "Koordinatlar (2, 2)" mesajını izlemek için bir state'in olması gerekli değildir.
-    // Koordinatları almak için yukarıdaki "getXY" helperını ve ardından "getXYMesaj"ı kullanabilirsiniz.
-    // tamamen oluşturulmuş stringi döndürür.
-  }
 
   function reset() {
     setState(initalState);
   }
 
   function sonrakiIndex(yon) {
-    // Bu helper bir yön ("sol", "yukarı", vb.) alır ve "B" nin bir sonraki indeksinin ne olduğunu hesaplar.
-    // Gridin kenarına ulaşıldığında başka gidecek yer olmadığı için,
-    // şu anki indeksi değiştirmemeli.
-
-    if (state.index >= 0 && state.index <= 8) {
-      if (yon === "left" && XY.X !== 1) {
-        setState({
-          ...state,
-          index: state.index - 1,
-          steps: state.steps + 1,
-        });
-      } else if (yon === "right" && XY.X !== 3) {
-        setState({
-          ...state,
-          index: state.index + 1,
-          steps: state.steps + 1,
-        });
-      } else if (yon === "up" && XY.Y !== 1) {
-        setState({
-          ...state,
-          index: state.index - 3,
-          steps: state.steps + 1,
-        });
-      } else if (yon === "down" && XY.Y !== 3) {
-        setState({
-          ...state,
-          index: state.index + 3,
-          steps: state.steps + 1,
-        });
-      }
+    if (yon === "left" && XY.X !== 1) {
+      setState({
+        ...state,
+        index: state.index - 1,
+        steps: state.steps + 1,
+        message: "",
+      });
+    } else if (yon === "right" && XY.X !== 3) {
+      setState({
+        ...state,
+        index: state.index + 1,
+        steps: state.steps + 1,
+        message: "",
+      });
+    } else if (yon === "up" && XY.Y !== 1) {
+      setState({
+        ...state,
+        index: state.index - 3,
+        steps: state.steps + 1,
+        message: "",
+      });
+    } else if (yon === "down" && XY.Y !== 3) {
+      setState({
+        ...state,
+        index: state.index + 3,
+        steps: state.steps + 1,
+        message: "",
+      });
+    }
+    if (XY.X === 1 && yon === "left") {
+      setState({ ...state, message: "Sola gidemezsin!" });
+    } else if (XY.X === 3 && yon === "right") {
+      setState({ ...state, message: "Sağa gidemezsin!" });
+    } else if (XY.Y === 1 && yon === "up") {
+      setState({ ...state, message: "Yukarıya gidemezsin!" });
+    } else if (XY.Y === 3 && yon === "down") {
+      setState({ ...state, message: "Aşağıya gidemezsin!" });
     }
 
     console.log(yon);
   }
 
   console.log(state);
-  /*
-  function ilerle(evt) {
-    // Bu event handler, "B" için yeni bir dizin elde etmek üzere yukarıdaki yardımcıyı kullanabilir,
-    // ve buna göre state i değiştirir.
-  }*/
-
-  function onChange(evt) {
-    // inputun değerini güncellemek için bunu kullanabilirsiniz
-  }
 
   function onSubmit(evt) {
     // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
@@ -133,7 +116,7 @@ export default function AppFunctional(props) {
         ))}
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{state.message}</h3>
       </div>
       <div id="keypad">
         <button id="left" onClick={() => sonrakiIndex("left")}>
