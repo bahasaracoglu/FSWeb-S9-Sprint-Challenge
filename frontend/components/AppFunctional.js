@@ -15,34 +15,34 @@ export default function AppFunctional(props) {
   // AŞAĞIDAKİ HELPERLAR SADECE ÖNERİDİR.
   // Bunları silip kendi mantığınızla sıfırdan geliştirebilirsiniz.
 
-  let XY;
+  let XY = {};
   switch (state.index) {
     case 0:
-      XY = "(1, 1)";
+      XY = { X: 1, Y: 1 };
       break;
     case 1:
-      XY = "(2, 1)";
+      XY = { X: 2, Y: 1 };
       break;
     case 2:
-      XY = "(3, 1)";
+      XY = { X: 3, Y: 1 };
       break;
     case 3:
-      XY = "(1, 2)";
+      XY = { X: 1, Y: 2 };
       break;
     case 4:
-      XY = "(2, 2)";
+      XY = { X: 2, Y: 2 };
       break;
     case 5:
-      XY = "(3, 2)";
+      XY = { X: 3, Y: 2 };
       break;
     case 6:
-      XY = "(1, 3)";
+      XY = { X: 1, Y: 3 };
       break;
     case 7:
-      XY = "(2, 3)";
+      XY = { X: 2, Y: 3 };
       break;
     case 8:
-      XY = "(3, 3)";
+      XY = { X: 3, Y: 3 };
       break;
     default:
     // code block
@@ -70,26 +70,26 @@ export default function AppFunctional(props) {
     // Gridin kenarına ulaşıldığında başka gidecek yer olmadığı için,
     // şu anki indeksi değiştirmemeli.
 
-    if (state.index >= 1 && state.index <= 7) {
-      if (yon === "left") {
+    if (state.index >= 0 && state.index <= 8) {
+      if (yon === "left" && XY.X !== 1) {
         setState({
           ...state,
           index: state.index - 1,
           steps: state.steps + 1,
         });
-      } else if (yon === "right") {
+      } else if (yon === "right" && XY.X !== 3) {
         setState({
           ...state,
           index: state.index + 1,
           steps: state.steps + 1,
         });
-      } else if (yon === "up") {
+      } else if (yon === "up" && XY.Y !== 1) {
         setState({
           ...state,
           index: state.index - 3,
           steps: state.steps + 1,
         });
-      } else if (yon === "down") {
+      } else if (yon === "down" && XY.Y !== 3) {
         setState({
           ...state,
           index: state.index + 3,
@@ -119,7 +119,7 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Koordinatlar {XY}</h3>
+        <h3 id="coordinates">Koordinatlar {`(${XY.X},${XY.Y})`}</h3>
         <h3 id="steps">{state.steps} kere ilerlediniz</h3>
       </div>
       <div id="grid">
