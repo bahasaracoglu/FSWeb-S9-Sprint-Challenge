@@ -3,10 +3,10 @@ import { useState } from "react";
 
 // önerilen başlangıç stateleri
 const initalState = {
-  initialMessage: "",
-  initialEmail: "",
-  initialSteps: 0,
-  initialIndex: 4, //  "B" nin bulunduğu indexi
+  message: "",
+  email: "",
+  steps: 0,
+  index: 4, //  "B" nin bulunduğu indexi
 };
 
 export default function AppFunctional(props) {
@@ -15,45 +15,45 @@ export default function AppFunctional(props) {
   // AŞAĞIDAKİ HELPERLAR SADECE ÖNERİDİR.
   // Bunları silip kendi mantığınızla sıfırdan geliştirebilirsiniz.
 
-  let cord;
-  switch (state.initialIndex) {
+  let XY;
+  switch (state.index) {
     case 0:
-      cord = "(1, 1)";
+      XY = "(1, 1)";
       break;
     case 1:
-      cord = "(2, 1)";
+      XY = "(2, 1)";
       break;
     case 2:
-      cord = "(3, 1)";
+      XY = "(3, 1)";
       break;
     case 3:
-      cord = "(1, 2)";
+      XY = "(1, 2)";
       break;
     case 4:
-      cord = "(2, 2)";
+      XY = "(2, 2)";
       break;
     case 5:
-      cord = "(3, 2)";
+      XY = "(3, 2)";
       break;
     case 6:
-      cord = "(1, 3)";
+      XY = "(1, 3)";
       break;
     case 7:
-      cord = "(2, 3)";
+      XY = "(2, 3)";
       break;
     case 8:
-      cord = "(3, 3)";
+      XY = "(3, 3)";
       break;
     default:
     // code block
   }
 
-  console.log(cord);
-
+  console.log(XY);
+  /*
   function getXY(index) {
     // Koordinatları izlemek için bir state e sahip olmak gerekli değildir.
     // Bunları hesaplayabilmek için "B" nin hangi indexte olduğunu bilmek yeterlidir.
-  }
+  }*/
 
   function getXYMesaj() {
     // Kullanıcı için "Koordinatlar (2, 2)" mesajını izlemek için bir state'in olması gerekli değildir.
@@ -70,30 +70,32 @@ export default function AppFunctional(props) {
     // Gridin kenarına ulaşıldığında başka gidecek yer olmadığı için,
     // şu anki indeksi değiştirmemeli.
 
-    if (yon === "left") {
-      setState({
-        ...state,
-        initialIndex: state.initialIndex - 1,
-        initialSteps: state.initialSteps + 1,
-      });
-    } else if (yon === "right") {
-      setState({
-        ...state,
-        initialIndex: state.initialIndex + 1,
-        initialSteps: state.initialSteps + 1,
-      });
-    } else if (yon === "up") {
-      setState({
-        ...state,
-        initialIndex: state.initialIndex - 3,
-        initialSteps: state.initialSteps + 1,
-      });
-    } else if (yon === "down") {
-      setState({
-        ...state,
-        initialIndex: state.initialIndex + 3,
-        initialSteps: state.initialSteps + 1,
-      });
+    if (state.index >= 1 && state.index <= 7) {
+      if (yon === "left") {
+        setState({
+          ...state,
+          index: state.index - 1,
+          steps: state.steps + 1,
+        });
+      } else if (yon === "right") {
+        setState({
+          ...state,
+          index: state.index + 1,
+          steps: state.steps + 1,
+        });
+      } else if (yon === "up") {
+        setState({
+          ...state,
+          index: state.index - 3,
+          steps: state.steps + 1,
+        });
+      } else if (yon === "down") {
+        setState({
+          ...state,
+          index: state.index + 3,
+          steps: state.steps + 1,
+        });
+      }
     }
 
     console.log(yon);
@@ -117,16 +119,16 @@ export default function AppFunctional(props) {
   return (
     <div id="wrapper" className={props.className}>
       <div className="info">
-        <h3 id="coordinates">Koordinatlar {cord}</h3>
-        <h3 id="steps">{state.initialSteps} kere ilerlediniz</h3>
+        <h3 id="coordinates">Koordinatlar {XY}</h3>
+        <h3 id="steps">{state.steps} kere ilerlediniz</h3>
       </div>
       <div id="grid">
         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((idx) => (
           <div
             key={idx}
-            className={`square${idx === state.initialIndex ? " active" : ""}`}
+            className={`square${idx === state.index ? " active" : ""}`}
           >
-            {idx === state.initialIndex ? "B" : null}
+            {idx === state.index ? "B" : null}
           </div>
         ))}
       </div>
@@ -155,9 +157,9 @@ export default function AppFunctional(props) {
           id="email"
           type="email"
           placeholder="email girin"
-          value={state.initialEmail}
+          value={state.email}
           onChange={(event) =>
-            setState({ ...state, initialEmail: event.target.value })
+            setState({ ...state, email: event.target.value })
           }
         ></input>
         <input id="submit" type="submit"></input>
