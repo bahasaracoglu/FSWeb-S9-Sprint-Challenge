@@ -109,8 +109,6 @@ export default function AppFunctional(props) {
           ...state,
           message: response.data.message,
           email: "",
-          steps: 0,
-          index: 4,
         });
 
         //console.log(response.data.message);
