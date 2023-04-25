@@ -44,7 +44,7 @@ export default function AppFunctional(props) {
     default:
   }
 
-  console.log(XY);
+  //console.log(XY);
 
   function reset() {
     setState(initalState);
@@ -81,23 +81,22 @@ export default function AppFunctional(props) {
       });
     }
     if (XY.X === 1 && yon === "left") {
-      setState({ ...state, message: "Sola gidemezsin!" });
+      setState({ ...state, message: "Sola gidemezsiniz" });
     } else if (XY.X === 3 && yon === "right") {
-      setState({ ...state, message: "Sağa gidemezsin!" });
+      setState({ ...state, message: "Sağa gidemezsiniz" });
     } else if (XY.Y === 1 && yon === "up") {
-      setState({ ...state, message: "Yukarıya gidemezsin!" });
+      setState({ ...state, message: "Yukarıya gidemezsiniz" });
     } else if (XY.Y === 3 && yon === "down") {
-      setState({ ...state, message: "Aşağıya gidemezsin!" });
+      setState({ ...state, message: "Aşağıya gidemezsiniz" });
     }
 
-    console.log(yon);
+    // console.log(yon);
   }
 
   console.log(state);
 
   function onSubmit(evt) {
     evt.preventDefault();
-
     axios
       .post("http://localhost:9000/api/result", {
         x: XY.X,
@@ -106,11 +105,22 @@ export default function AppFunctional(props) {
         email: state.email,
       })
       .then(function (response) {
-        console.log(response);
+        setState({
+          ...state,
+          message: response.data.message,
+          email: "",
+          steps: 0,
+          index: 4,
+        });
+
+        //console.log(response.data.message);
       })
       .catch(function (error) {
-        console.log(error);
+        setState({ ...state, message: error.response.data.message });
+        // console.log({ ...state, message: error.response.data.message });
       });
+
+    console.log(state);
   }
 
   return (
