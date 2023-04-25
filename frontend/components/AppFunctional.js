@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 
 const initalState = {
   message: "",
@@ -41,7 +42,6 @@ export default function AppFunctional(props) {
       XY = { X: 3, Y: 3 };
       break;
     default:
-    // code block
   }
 
   console.log(XY);
@@ -96,7 +96,21 @@ export default function AppFunctional(props) {
   console.log(state);
 
   function onSubmit(evt) {
-    // payloadu POST etmek için bir submit handlera da ihtiyacınız var.
+    evt.preventDefault();
+
+    axios
+      .post("http://localhost:9000/api/result", {
+        x: XY.X,
+        y: XY.Y,
+        steps: state.steps,
+        email: state.email,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (
@@ -135,7 +149,7 @@ export default function AppFunctional(props) {
           reset
         </button>
       </div>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           id="email"
           type="email"
